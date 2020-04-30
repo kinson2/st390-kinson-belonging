@@ -1,0 +1,40 @@
+---
+title: "Kinship2 Package Family Tree"
+author: "Ashley Arroyo"
+date: "4/29/2020"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r}
+#Load packages and read in data
+library(readxl)
+library(kinship2)
+kinship2 <- read_excel("~/kinship2.xlsx")
+View(kinship2)
+```
+
+```{r}
+#Create the data set
+sample.ped2 = subset(kinship2, ped == 2)
+sample.ped2
+```
+
+```{r}
+pedAll <- pedigree(id = sample.ped2$id, dadid = sample.ped2$father, momid = sample.ped2$mother,
+sex = sample.ped2$sex, famid = sample.ped2$ped)
+print(pedAll)
+```
+
+* Squares and circles with a slash represent no college education
+
+
+* Blackened squares and circles indicate whether the person was born in the United States or not
+
+```{r}
+pedAll <- pedigree(id = sample.ped2$id, dadid = sample.ped2$father, momid = sample.ped2$mother,
+sex = sample.ped2$sex, famid = sample.ped2$ped, status = sample.ped2$education_status, affected = sample.ped2$US_born)
+plot(pedAll["2"])
+```
+
